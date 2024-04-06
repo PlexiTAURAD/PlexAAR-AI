@@ -23,5 +23,4 @@ st.components.v1.html(folium_static, width = 1080, height = 760)
 
 
 image = cv2.imread("map.png")
-cv2.namedWindow("Satellite Image")
 cv2.imshow("Satellite Image", image)
