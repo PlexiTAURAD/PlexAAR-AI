@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 from PIL import Image
 from io import BytesIO
+import re
 
 baseurl = 'https://nominatim.openstreetmap.org/search?format=json'
 address = "Aparna hill park, Hyderabad"
@@ -21,7 +22,11 @@ map = folium.Map(location=location, zoom_start=18)
 folium_static = map._repr_html_()
 st.components.v1.html(folium_static, width=1080, height=760)
 
-html = folium_static.split('<body>')[1].split('</body>')[0]
+match = re.search(r'<body>(.*?)</body>', folium_static, re.DOTALL)
+if match:
+    html = match.group(1)
+else:
+    raise ValueError("Unable to extract HTML content from folium_static")
 html_encoded = base64.b64encode(html.encode()).decode()
 
 html_file = f"""
