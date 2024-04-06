@@ -19,29 +19,7 @@ bbox = data[0].get('boundingbox')
 location = float(latitude), float(longitude)
 
 map = folium.Map(location=location, zoom_start=18)
-folium_static = map._repr_html_()
-st.components.v1.html(folium_static, width=1080, height=760)
 
-match = re.search(r'<body>(.*?)</body>', folium_static, re.DOTALL)
-if match:
-    html = match.group(1)
-else:
-    raise ValueError("Unable to extract HTML content from folium_static")
-html_encoded = base64.b64encode(html.encode()).decode()
-
-html_file = f"""
-<html>
-<body>
-<img src="data:text/html;base64,{html_encoded}">
-</body>
-</html>
-"""
-
-from selenium import webdriver
-driver = webdriver.Chrome()
-driver.get(f"data:text/html;base64,{html_encoded}")
-driver.get_screenshot_as_file("map.png")
-driver.quit()
 
 image = cv2.imread("map.png")
 
