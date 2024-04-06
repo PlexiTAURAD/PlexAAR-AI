@@ -19,27 +19,32 @@ bbox = data[0].get('boundingbox')
 location = float(latitude), float(longitude)
 
 map = folium.Map(location=location, zoom_start=18)
+folium_static = map._repr_html_()
+st.components.v1.html(folium_static, width=1080, height=760)
 
+# Fetch and stitch satellite image tiles
+tiles = []
+for x in range(int(bbox[2]), int(bbox[3]) + 1):
+    for y in range(int(bbox[0]), int(bbox[1]) + 1):
+        tile_url = f"https://tile.openstreetmap.org/18/{x}/{y}.png"
+        response = requests.get(tile_url)
+        if response.status_code == 200:
+            tile = cv2.imdecode(np.frombuffer(response.content, np.uint8), cv2.IMREAD_COLOR)
+            tiles.append(tile)
 
-image = cv2.imread("map.png")
-
-cv2.namedWindow("Satellite Image", cv2.WINDOW_NORMAL)
-cv2.imshow("Satellite Image", image)
+stitched_image = cv2.hconcat(tiles)
 
 circle_radius = 10
 
-def on_mouse_event(event, x, y, flags, param):
-    global image  
+def process_image(stitched_image, x, y):
+    if 0 <= x < stitched_image.shape[1] and 0 <= y < stitched_image.shape[0]:
+        cv2.circle(stitched_image, (x, y), circle_radius, (0, 0, 255), 2)
+    return stitched_image
 
-    if event == cv2.EVENT_LBUTTONDOWN:
-       
-        cv2.circle(image, (x, y), circle_radius, (0, 0, 255), 2)
+st.subheader("Click on the map to add a circle")
+x_coord = st.number_input("X coordinate", value=0)
+y_coord = st.number_input("Y coordinate", value=0)
 
-        cv2.imshow("Satellite Image", image)
-
-        st.write(f"Clicked at ({x}, {y})")
-
-cv2.setMouseCallback("Satellite Image", on_mouse_event)
-
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+if st.button("Add Circle"):
+    processed_image = process_image(stitched_image.copy(), x_coord, y_coord)
+    st.image(processed_image, channels="BGR")
