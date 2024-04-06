@@ -14,9 +14,9 @@ if st.button("Get recommendation"):
     formatted_predictions = []
 
 
-formatted_predictions.append("The best trees for you are:")
-for i, prediction in enumerate(predictions, start=1):
-    formatted_predictions.append(f"{i}. {prediction}")
-numbered_list = "\n".join(formatted_predictions)
-st.write(numbered_list)
+    formatted_predictions.append("The best trees for you are:\n")
+    for i, prediction in enumerate(predictions, start=1):
+        formatted_predictions.append(f"{i}. {prediction}")
+    numbered_list = "\n".join(formatted_predictions)
+    st.write(numbered_list)
 
