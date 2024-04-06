@@ -21,26 +21,6 @@ map = folium.Map(location=location, zoom_start= 18)
 folium_static = map._repr_html_()
 st.components.v1.html(folium_static, width = 1080, height = 760)
 
-import base64
-from io import BytesIO
-
-html = folium_static.split('<body>')[1].split('</body>')[0]
-
-html_encoded = base64.b64encode(html.encode()).decode()
-
-html_file = f"""
-<html>
-<body>
-<img src="data:text/html;base64,{html_encoded}">
-</body>
-</html>
-"""
-
-from selenium import webdriver
-driver = webdriver.Chrome()
-driver.get(f"data:text/html;base64,{html_encoded}")
-driver.get_screenshot_as_file("map.png")
-driver.quit()
 
 image = cv2.imread("map.png")
 cv2.namedWindow("Satellite Image", cv2.WINDOW_NORMAL)
