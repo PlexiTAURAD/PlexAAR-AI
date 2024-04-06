@@ -2,3 +2,4 @@ folium
 opencv-python-headless
 numpy
 selenium
+cohere
