@@ -8,6 +8,7 @@ import numpy as np
 from PIL import Image
 from io import BytesIO
 import re
+import math
 
 baseurl = 'https://nominatim.openstreetmap.org/search?format=json'
 address = "Aparna hill park, Hyderabad"
@@ -24,8 +25,8 @@ st.components.v1.html(folium_static, width=1080, height=760)
 
 # Fetch and stitch satellite image tiles
 tiles = []
-for x in range(int(bbox[2]), int(bbox[3]) + 1):
-    for y in range(int(bbox[0]), int(bbox[1]) + 1):
+for x in range(int(math.floor(float(bbox[2]))), int(math.ceil(float(bbox[3]))) + 1):
+    for y in range(int(math.floor(float(bbox[0]))), int(math.ceil(float(bbox[1]))) + 1):
         tile_url = f"https://tile.openstreetmap.org/18/{x}/{y}.png"
         response = requests.get(tile_url)
         if response.status_code == 200:
