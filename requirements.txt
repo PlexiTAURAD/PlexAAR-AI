@@ -3,3 +3,4 @@ opencv-python-headless
 numpy
 selenium
 cohere
+streamlit-folium
