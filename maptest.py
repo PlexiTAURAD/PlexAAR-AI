@@ -21,6 +21,3 @@ map = folium.Map(location=location, zoom_start= 18)
 folium_static = map._repr_html_()
 st.components.v1.html(folium_static, width = 1080, height = 760)
 
-
-image = cv2.imread("map.png")
-cv2.imshow("Satellite Image", image)
