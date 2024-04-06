@@ -15,7 +15,7 @@ location = float(latitude), float(longitude)
 
 map = folium.Map(location=location, zoom_start=18)
 folium_static = map._repr_html_()
-st.components.v1.html(folium_static, width=1080, height=760)
+st.components.v1.html(folium_static, height=500, width=700)
 
 # Fetch and stitch satellite image tiles
 tiles = []
@@ -38,11 +38,12 @@ def process_image(stitched_image, x, y):
         cv2.circle(stitched_image, (x, y), circle_radius, (0, 0, 255), 2)
     return stitched_image
 
-st.subheader("Click on the map to add a circle")
-x_coord = st.number_input("X coordinate", value=0)
-y_coord = st.number_input("Y coordinate", value=0)
-
-if st.button("Add Circle"):
-    processed_image = process_image(stitched_image, x_coord, y_coord)
+def on_map_click(coords):
+    x, y = coords
+    processed_image = process_image(stitched_image.copy(), int(x), int(y))
     if processed_image is not None:
         st.image(processed_image, channels="BGR")
+
+map.add_child(folium.ClickEventHandler(callback=on_map_click))
+
+st.subheader("Click on the map to add a circle")
