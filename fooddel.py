@@ -11,6 +11,8 @@ from geopy.distance import distance
 baseurl = 'https://nominatim.openstreetmap.org/search?format=json'
 
 address = st.text_input('Enter your address')
+date = st.text_input("When will you donate", min_value="04-07-2024", format = "MM.DD.YYYY")
+
 response = requests.get(f"{baseurl}&q={address}")
 data = response.json()
 latitude = data[0].get('lat')
@@ -18,7 +20,7 @@ longitude = data[0].get('lon')
 bbox = data[0].get('boundingbox')
 location = float(latitude), float(longitude)
 map = folium.Map(location=location, width = 1080, height= 720,zoom_start=3)
-
+folium.Marker(location=location, popup="Your location").add_to(map)
 bank1 = float(13.04059886932373), float(77.61155700683594) # Food bank
 bank2 = float(13.009804), float(77.3991149) # Feed India
 bank3 = float(12.9532653), float(77.4914687) # The public fridge
@@ -40,3 +42,4 @@ else:
     folium.PolyLine((location,bank3)).add_to(map)
 
 st_folium(map)
+st.write("We will come to your location: " + address + "on date: " + date + ". You can also visit one of our food banks.")
