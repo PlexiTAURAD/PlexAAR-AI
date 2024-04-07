@@ -4,3 +4,4 @@ numpy
 selenium
 cohere
 streamlit-folium
+geopy
