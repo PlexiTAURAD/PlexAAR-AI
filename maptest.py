@@ -17,11 +17,11 @@ longitude = data[0].get('lon')
 bbox = data[0].get('boundingbox')
 location = float(latitude), float(longitude)
 map = folium.Map(location=location, width = 800, height= 400,zoom_start=18)
-Draw(export=True).add_to(m)
+Draw(export=True).add_to(map)
 
 c1, c2 = st.columns(2)
 with c1:
-    output = st_folium(m, width=700, height=500)
+    output = st_folium(map, width=800, height=400)
 
 with c2:
     st.write(output)
