@@ -19,7 +19,7 @@ latitude = data[0].get('lat')
 longitude = data[0].get('lon')
 bbox = data[0].get('boundingbox')
 location = float(latitude), float(longitude)
-map = folium.Map(location=location, width = 1080, height= 720,zoom_start=3)
+map = folium.Map(location=location, width = 1080, height= 720,zoom_start=10)
 folium.Marker(location=location, popup="Your location").add_to(map)
 bank1 = float(13.04059886932373), float(77.61155700683594) # Food bank
 bank2 = float(13.009804), float(77.3991149) # Feed India
