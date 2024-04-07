@@ -1,7 +1,7 @@
 import requests
 from pprint import pprint
 import folium
-from streamlit_folium import folium_static
+from streamlit_folium import st_folium
 import os
 import streamlit as st
 baseurl = 'https://nominatim.openstreetmap.org/search?format=json'
@@ -15,5 +15,4 @@ if st.button("Get area map"):
     bbox = data[0].get('boundingbox')
     location = float(latitude), float(longitude)
     map = folium.Map(location=location, width = 800, height= 400)
-    with st.beta_container():
-        folium_static(map)
+    st_data = st_folium(map)
