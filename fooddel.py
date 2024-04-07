@@ -26,7 +26,7 @@ bank3 = float(12.9532653), float(77.4914687) # The public fridge
 km1 = distance(location,bank1)
 km2 = distance(location,bank2)
 km3 = distance(location,bank3)
-wat = [min(km1,km2,km3)]
+wat = min(km1,km2,km3)
 
 folium.Marker(location=bank1, popup="Food bank").add_to(map)
 folium.Marker(location=bank2, popup="Feed India").add_to(map)
