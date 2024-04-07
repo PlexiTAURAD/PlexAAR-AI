@@ -42,4 +42,4 @@ else:
     folium.PolyLine((location,bank3)).add_to(map)
 
 st_folium(map)
-st.write("We will come to your location: " + address + "on date: " + date + ". You can also visit one of our food banks.")
+st.write(f"We will come to your location: {address} on date: {date}. You can also visit one of our food banks.")
