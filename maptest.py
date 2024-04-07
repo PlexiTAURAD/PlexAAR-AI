@@ -2,6 +2,7 @@ import requests
 from pprint import pprint
 import folium
 from streamlit_folium import st_folium
+from folium.plugins import Draw
 import os
 import streamlit as st
 import time
@@ -16,5 +17,14 @@ longitude = data[0].get('lon')
 bbox = data[0].get('boundingbox')
 location = float(latitude), float(longitude)
 map = folium.Map(location=location, width = 800, height= 400,zoom_start=18)
+Draw(export=True).add_to(m)
+
+c1, c2 = st.columns(2)
+with c1:
+    output = st_folium(m, width=700, height=500)
+
+with c2:
+    st.write(output)
+
 st_folium(map)
     
