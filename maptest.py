@@ -15,4 +15,4 @@ if st.button("Get area map"):
     bbox = data[0].get('boundingbox')
     location = float(latitude), float(longitude)
     map = folium.Map(location=location, width = 800, height= 400)
-st_data = st_folium(map)
+st_folium(map)
