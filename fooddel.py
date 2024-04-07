@@ -38,3 +38,5 @@ elif wat == km2:
     folium.PolyLine((location,bank2)).add_to(map)
 else:
     folium.PolyLine((location,bank3)).add_to(map)
+
+st_folium(map)
