@@ -10,8 +10,8 @@ from geopy.distance import distance
 
 baseurl = 'https://nominatim.openstreetmap.org/search?format=json'
 
-address = st.text_input('Enter your address')
-date = st.date_input("When will you donate", min_value="04-07-2024", format = "MM.DD.YYYY")
+address = st.text_input("Enter your address")
+date = st.date_input("When will you donate")
 
 response = requests.get(f"{baseurl}&q={address}")
 data = response.json()
